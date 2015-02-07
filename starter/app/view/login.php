@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Login</title>
-	<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+<?php _load_view('partial/header', array('title' => 'Login')); ?>
 	<h1>Member Login</h1>
     
    <p>Thanks for visiting! Please either login below, or <a href="register.php">click here to register</a>.</p>
@@ -17,5 +10,4 @@
 		<input type="submit" name="login" id="login" value="Login" />
 	</fieldset>
 	</form>
-</body>
-</html>
+<?php _load_view('partial/footer'); ?>

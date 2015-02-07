@@ -1,11 +1,17 @@
 <?php 
 
-function _load_view($view) {
+function _load_view($view, $value = null) {
 
 	$file = DD . "/app/view/" . $view . ".php";
 
 	if(file_exists($file)) {
+		ob_start();
+		
+		if(is_array($value)) {
+			extract($value);
+		}
 		require $file;
+		ob_end_flush();
 	} else {
 		trigger_error("View file does not exists!", E_USER_ERROR);
 	}
@@ -61,6 +67,13 @@ function _config_get($value) {
 	}
 }
 
+
+function _isPost() {
+	if($_SERVER['REQUEST_METHOD'] == "POST") {
+		return true;
+	}	
+	return false;
+}
 
 function dump($value, $die = false) {
 	var_dump($value);
