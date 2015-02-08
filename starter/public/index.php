@@ -4,6 +4,7 @@ define("DD", __DIR__ . "/..");
 
 require DD . "/wpa18/functions.php";
 require DD . "/app/controller/controllers.php";
+require DD . "/app/model/model_user.php";
 
 $routes = include DD . '/app/routes.php';
 

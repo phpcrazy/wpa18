@@ -30,10 +30,19 @@ function _register_controller() {
 	if(_isPost()) {
 		$userdata = array(
 			'username' 	=> $_POST['username'],
-			'password' 	=> $_POST['password'],
+			'password' 	=> md5($_POST['password']),
 			'email' 	=> $_POST['email']
 			);
-		dump($userdata);
+
+		if(_model_user_check($userdata['username'])) {
+			echo "User already exists!";
+		} else {
+			if(_model_user_insert($userdata)) {
+				echo "Success!";
+			} else {
+				echo "Failed!";
+			}
+		}
 	}
 	_load_view('mregister');
 }

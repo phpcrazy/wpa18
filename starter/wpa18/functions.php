@@ -24,7 +24,7 @@ function _load_view($view, $value = null) {
 *
 */
 
-function _db_connect() {
+function _db_connect($sql, $check = false) {
 
 	// session_start(); 
 
@@ -33,22 +33,26 @@ function _db_connect() {
 	$dbuser = _config_get('database.username');
 	$dbpass = _config_get('database.password');
 
+	mysql_connect($dbhost, $dbuser, $dbpass) or die("MySQL Error: " . mysql_error());
+	mysql_select_db($dbname) or die("MySQL Error: " . mysql_error());
 	
-	$link = mysql_connect(
-		$dbhost, $dbuser, $dbpass);
-	if (!$link) {
-    	die('Could not connect: ' . mysql_error());
+	$result =  mysql_query($sql);
+	if($check == true) {
+		if(mysql_num_rows($result) == 1) {
+			mysql_close();
+			return 1;
+		} else {
+			mysql_close();
+			return 0;
+		} 
 	}
-
-	mysql_select_db($dbname) 
-		or die("MySQL Error: " . mysql_error());
-
-	return $link;
+	
+	mysql_close();
+	return $result;
+	
 }
 
-function _db_disconnect($link) {
-	mysql_close($link);	
-}
+// _config_get('app.title')
 
 function _config_get($value) {
 	$get_value = explode('.', $value);
