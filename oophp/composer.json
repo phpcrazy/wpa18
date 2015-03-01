@@ -1,0 +1,8 @@
+{
+  "autoload": {
+    "classmap": [
+      "wpa18/library",
+      "wpa18/provider"
+    ]
+  }
+}
