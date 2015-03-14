@@ -10,33 +10,26 @@ define("DD", __DIR__ . "/..");
 
 require DD . "/vendor/autoload.php";
 
+$request_uri = $_SERVER['REQUEST_URI'];
+$script_name = $_SERVER['SCRIPT_NAME'];
 
-// SELECT * FROM users;
-//$users = DB::table('students')->get();
-//var_dump($users);
-//
-//
-//$product = DB::table("products")->get();
+$request_uri = explode('/', $request_uri);
+$script_name = explode('/', $script_name);
 
-$user = DB::table("students")->where('name', 'Aung Aung')->get();
+$path_info = array_diff($request_uri, $script_name);
+$path_info = array_values($path_info);
 
-var_dump($user);
-
-
-$product = DB::table("products")->where('name', 'iPad')->get();
-var_dump($product);
-$product_array = array(
-    'name'      => 'iPhone',
-    'quantity'  => '5',
-    'price'     => '800000'
+$route = array(
+    'blog'          => 'BlogController@index'
 );
 
-$product_id = DB::table('products')->insert($product_array);
-//var_dump($products);
-// SELECT * FROM users WHERE username = "Aung Aung"
-// DB::table('users')->where('username', 'Aung Aung')->get();
 
-var_dump(memory_get_usage());
-// Book
-// Category
-// Author
+if(array_key_exists($path_info[0], $route)) {
+    $controller_key = array_shift($path_info);
+    $controller = $route[$controller_key];
+    $controller = explode('@', $controller);
+    var_dump($path_info);
+    call_user_func_array(array($controller[0], $controller[1]), $path_info);
+} else {
+    echo "404";
+}

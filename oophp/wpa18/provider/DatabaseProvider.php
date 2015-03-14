@@ -17,8 +17,8 @@ class DB extends PDO {
     private $pass;
 
     private $table_name = null;
-    private $where_key = null;
-    private $where_value = null;
+    private $where_key;
+    private $where_value;
 
     public function __construct(){
         $this->engine = Config::database('engine');
@@ -28,12 +28,10 @@ class DB extends PDO {
         $this->pass = Config::database('pass');
         $dns = $this->engine.':dbname='.$this->database.";host=".$this->host;
         parent::__construct( $dns, $this->user, $this->pass );
-
-        echo  "Constryc";
     }
 
     public function __destruct() {
-        echo "DEWERWERW ";
+
     }
 
     public static function table($table_name) {
@@ -41,6 +39,8 @@ class DB extends PDO {
             self::$_instance = new DB();
         }
         self::$_instance->table_name = $table_name;
+        self::$_instance->where_value = null;
+        self::$_instance->where_key = null;
         return self::$_instance;
     }
 
@@ -60,9 +60,12 @@ class DB extends PDO {
                 . $this->where_key . ' = "' . $this->where_value . '"';
         }
 
-
         $query = $this->query($sql);
         return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function delete($id) {
+        
     }
 
 }
