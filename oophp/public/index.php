@@ -29,7 +29,7 @@ if(array_key_exists($path_info[0], $route)) {
     $controller = $route[$controller_key];
     $controller = explode('@', $controller);
     var_dump($path_info);
-    call_user_func_array(array($controller[0], $controller[1]), $path_info);
+    call_user_func_array(array(new $controller[0], $controller[1]), $path_info);
 } else {
     echo "404";
 }
