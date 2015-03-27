@@ -18,6 +18,6 @@ class BlogController {
     }
 
     public function __destruct() {
-        
+
     }
 }
